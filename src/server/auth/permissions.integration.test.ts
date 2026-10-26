@@ -1,0 +1,29 @@
+import { beforeEach, describe, expect, it } from 'vitest'
+import { redis } from '../../lib/redis'
+import { getPrisma } from '../../lib/prisma'
+import { findUserById } from '../db/read'
+import { RedisKeys } from '../redis/keys'
+import { getAdminRedis, resetStores, seedAccessUser } from '../../test/integration-db'
+import { APP_ID } from '../../test/integration-env'
+
+describe('参加アプリの接続権限', () => {
+  beforeEach(async () => {
+    await resetStores()
+  })
+
+  it('User.password は読めず、id、email、name、role、disabledAt は読める', async () => {
+    const user = { id: 'user-1', email: 'a@example.com', name: '参加者', role: 'manager' }
+    await seedAccessUser({ ...user, permission: 'allow' })
+    await expect(getPrisma().$queryRaw`SELECT password FROM "User"`).rejects.toThrow(
+      /permission denied/i
+    )
+    await expect(findUserById(user.id)).resolves.toEqual({ ...user, disabledAt: null })
+  })
+
+  it('セッションキーの SET は拒否し、GET はできる', async () => {
+    const key = RedisKeys.session(APP_ID, 'readable')
+    await getAdminRedis().set(key, 'ok')
+    await expect(redis.get(key)).resolves.toBe('ok')
+    await expect(redis.set(key, 'no')).rejects.toThrow(/NOPERM/)
+  })
+})

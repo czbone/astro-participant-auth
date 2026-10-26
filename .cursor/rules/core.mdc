@@ -1,0 +1,28 @@
+---
+description: スタック、配置、スタイル、仕様の正本
+alwaysApply: true
+---
+
+# コア規約
+
+- これは参加アプリの認証骨格。画面の `.astro` はソースのまま配布し、参加アプリのビルドがコンパイルする。
+- `astro/app` と `astro/hono` は import しない。仮想モジュールは参加アプリが `createParticipantFetch` へ渡す。
+- 処理順は `src/participant-fetch.ts`。`middleware()` → `POST /logout` → `routes()` → `actions()` → `pages()` → `Set-Cookie`。本番以外の正規ホストへの 302 もここ。
+- 更新の許可リストの初期値は `POST /logout` だけ。公開パスは `/callback` と `/logged-out`、およびファイル名に `.` を含む静的ファイル。増やす設定は置かない。
+- Prisma 7 は共有4テーブルの読み取り専用。マイグレーションは置かない。セッションは Redis（`GET` / `GETDEL` / `EXPIRE` / `DEL` / `SREM` / `SMEMBERS` のみ）。
+- 仕様の正本は、公開するまで参加アプリの `docs/`。`access.md` と `connections.md` がこのパッケージの契約。
+
+## 配置
+
+- ページ: `src/pages` / レイアウト: `src/layouts` / サーバー処理: `src/server`
+- 公開口: `src/index.ts`、`src/integration.ts`、`src/middleware/index.ts`
+
+## スタイル
+
+- パッケージ内の import は相対パス。`@/` は使わない。
+- TypeScript strict。`any` 禁止。
+- セミコロンなし、シングルクォート。UI / エラーメッセージは日本語。
+
+## コマンド
+
+`pnpm test` / `pnpm test:integration` / `pnpm lint` / `pnpm db:generate`
