@@ -6,17 +6,17 @@ allowBuilds:
   sharp: true
 minimumReleaseAgeExclude:
   - '@types/node@25.9.2'
-  - '@typescript-eslint/eslint-plugin@8.66.0'
-  - '@typescript-eslint/parser@8.66.0'
-  - '@typescript-eslint/project-service@8.66.0'
-  - '@typescript-eslint/scope-manager@8.66.0'
-  - '@typescript-eslint/tsconfig-utils@8.66.0'
-  - '@typescript-eslint/type-utils@8.66.0'
-  - '@typescript-eslint/types@8.66.0'
-  - '@typescript-eslint/typescript-estree@8.66.0'
-  - '@typescript-eslint/utils@8.66.0'
-  - '@typescript-eslint/visitor-keys@8.66.0'
-  - typescript-eslint@8.66.0
+  - '@typescript-eslint/eslint-plugin@8.66.0 || 8.72.1'
+  - '@typescript-eslint/parser@8.66.0 || 8.72.1'
+  - '@typescript-eslint/project-service@8.66.0 || 8.72.1'
+  - '@typescript-eslint/scope-manager@8.66.0 || 8.72.1'
+  - '@typescript-eslint/tsconfig-utils@8.66.0 || 8.72.1'
+  - '@typescript-eslint/type-utils@8.66.0 || 8.72.1'
+  - '@typescript-eslint/types@8.66.0 || 8.72.1'
+  - '@typescript-eslint/typescript-estree@8.66.0 || 8.72.1'
+  - '@typescript-eslint/utils@8.66.0 || 8.72.1'
+  - '@typescript-eslint/visitor-keys@8.66.0 || 8.72.1'
+  - typescript-eslint@8.66.0 || 8.72.1
   - hono@4.13.0
   - '@types/pg@8.20.4'
   - astro@7.3.7 || 7.3.8
