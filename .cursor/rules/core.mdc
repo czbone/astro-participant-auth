@@ -11,6 +11,7 @@ alwaysApply: true
 - 更新の許可リストの初期値は `POST /logout` だけ。公開パスは `/callback` と `/logged-out`、およびファイル名に `.` を含む静的ファイル。増やす設定は置かない。
 - Prisma 7 は共有4テーブルの読み取り専用。マイグレーションは置かない。セッションは Redis（`GET` / `GETDEL` / `EXPIRE` / `DEL` / `SREM` / `SMEMBERS` のみ）。
 - 仕様の正本は、公開するまで参加アプリの `docs/`。`access.md` と `connections.md` がこのパッケージの契約。
+- 認証サーバーの確定資料は https://github.com/czbone/astro-user-webauthn2/blob/main/docs/README.md 。引き渡し、セッション、Redis の定義はそこを参照する。
 
 ## 配置
 

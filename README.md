@@ -4,6 +4,8 @@
 
 仕様の正本は、公開するまで参加アプリの `docs/` です。判定は `access.md`、接続は `connections.md`、自動テストは `testing.md` です。
 
+認証サーバーの資料は [czbone/astro-user-webauthn2](https://github.com/czbone/astro-user-webauthn2) の [docs/](https://github.com/czbone/astro-user-webauthn2/blob/main/docs/README.md) です。詳細は [確定資料](docs/README.md) にあります。
+
 ## 公開口
 
 | 入口 | 内容 |

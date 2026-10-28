@@ -9,16 +9,14 @@
 ```ts
 // src/server/auth/access.ts の公開型
 export type PageAccess =
-  | { kind: 'public' }
-  | { kind: 'no-grant'; user: PublicUser }
-  | { kind: 'ok'; user: PublicUser }
+  { kind: 'public' } | { kind: 'no-grant'; user: PublicUser } | { kind: 'ok'; user: PublicUser }
 ```
 
-| 状態 | 意味 | `user` |
-| --- | --- | --- |
-| `public` | 公開ページまたは静的ファイル | なし |
-| `no-grant` | ログイン済みだが、このアプリの利用権限がない | あり |
-| `ok` | ログイン済みで、このアプリの利用権限もある | あり |
+| 状態       | 意味                                         | `user` |
+| ---------- | -------------------------------------------- | ------ |
+| `public`   | 公開ページまたは静的ファイル                 | なし   |
+| `no-grant` | ログイン済みだが、このアプリの利用権限がない | あり   |
+| `ok`       | ログイン済みで、このアプリの利用権限もある   | あり   |
 
 未ログインの通常ページはミドルウェアで認証サーバーへ引き渡されるため、通常のページでは `anonymous` 状態を直接参照しません。
 
@@ -141,7 +139,9 @@ const hasSession = access.kind === 'ok' || access.kind === 'no-grant'
 3. アプリ利用権限があること
 4. 更新先の操作が許可リストに含まれること
 
-許可リストに含まれない更新は、認証確認の後に `404` を返します。
+許可リストに含まれ、ここまで通った更新は、`locals.access` が `ok` の状態で処理へ進みます。許可リストに含まれない更新は、認証確認の後に `404` を返します。
+
+`POST /logout` だけは、パスキーが無い場合とこのアプリの利用権限が無い場合も 403 にせず、ログアウト処理へ進みます。未認証のログアウトは、ほかの更新と同じく 401「ログインが必要です」です。
 
 ```ts
 export const POST = async ({ locals }: { locals: App.Locals }) => {
@@ -181,11 +181,7 @@ const canManage = signedIn && canManageAppRoles(access.user.role)
 ---
 
 {signedIn ? (
-  <AccountPanel
-    client:load
-    userName={access.user.name}
-    canManage={canManage}
-  />
+  <AccountPanel client:load userName={access.user.name} canManage={canManage} />
 ) : (
   <p>このアプリを利用する権限がありません</p>
 )}
