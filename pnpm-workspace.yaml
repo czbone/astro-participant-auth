@@ -17,7 +17,7 @@ minimumReleaseAgeExclude:
   - '@typescript-eslint/utils@8.66.0 || 8.72.1'
   - '@typescript-eslint/visitor-keys@8.66.0 || 8.72.1'
   - typescript-eslint@8.66.0 || 8.72.1
-  - hono@4.13.0
+  - hono@4.13.0 || 4.13.17
   - '@types/pg@8.20.4'
   - astro@7.3.7 || 7.3.8
   - prettier-plugin-astro@1.1.1
